@@ -1,0 +1,39 @@
+﻿@model List< MVC_StokTakipOtomasyonu.Models.Entity.Sepet>
+@{
+    ViewBag.Title = "Sepet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Sepet</h2>
+<div class="row container">
+
+    @foreach (var item in Model)
+    {
+        <div class="row container">
+            <p>@item.UrunAdi</p>
+
+        </div>
+        <div class="row container">
+            <p>@item.BarkodNo</p>
+
+        </div>
+        <div class="row container">
+            <p>@item.AlisFiyati</p>
+
+        </div>
+        <div class="row container">
+            <p>@item.Miktari</p>
+
+        </div>
+        <div class="row container">
+            <p>@item.ToplamFiyati</p>
+
+        </div>
+    }
+
+</div>
+
+<div class="container">
+    @ViewBag.Tutar
+</div>
+

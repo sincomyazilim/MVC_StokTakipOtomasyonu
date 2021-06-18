@@ -1,0 +1,83 @@
+﻿@model List<MVC_StokTakipOtomasyonu.Models.Entity.Urunler>
+@{
+
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div class="container">
+    @using (Html.BeginForm("Index2", "Urunler", FormMethod.Get))
+    {
+        <div class="form-group">
+            <div style="width:25%;float:left">
+                @Html.TextBox("ara", null, new { @class = "form-control", @placeholder = "Aranacak ürün adı veya barkodno" })
+            </div>
+            <div style="float:left;margin-left:-5px">
+                @Html.ActionLink("Ara", "Index2", null, new { @class = "btn btn-info", onclick = "$(this).parents('form').attr('action', $(this).attr('href'));$(this).parents('form').submit();return false;" })
+            </div>
+        </div>
+    }
+        <br />
+        <br />  
+    @{
+        var wgrid = new WebGrid(source: Model, rowsPerPage: 3);
+        @wgrid.GetHtml(tableStyle: "table table-bordered table-striped", htmlAttributes: new {id="wgrid" },
+                columns: wgrid.Columns(
+                    wgrid.Column(columnName: "ID", header: "ID"),
+
+                    wgrid.Column(columnName: "Urunadi", header: "Ürün Adı"),
+
+                    wgrid.Column(columnName: "BarkodNo", header: "Barkod No"),
+
+                    wgrid.Column(columnName: "Kategoriler.Kategori", header: "Kategori"),
+
+                    wgrid.Column(columnName: "Markalar.Marka", header: "Marka"),
+
+                    wgrid.Column(columnName: "AlisFiyati", header: "Alış Fiyatı"),
+
+                    wgrid.Column(columnName: "SatisFiyati", header: "Satış Fiyatı"),
+
+                    wgrid.Column(columnName: "Miktari", header: "Miktarı",format:x=>x.Miktari.ToString("0.##")),
+
+                    wgrid.Column(columnName: "KDV", header: "K.D.V."),
+
+                    wgrid.Column(columnName: "Birimler.Birim", header: "Birim"),
+
+                    wgrid.Column(columnName: "Aciklama", header: "Açıklama"),
+
+                    wgrid.Column(columnName: "Tarih", header: "Tarih",format: x=>x.Tarih.ToString("dd.MM.yyyy"))
+
+                    )
+
+                    );
+        @Html.Hidden("dir", wgrid.SortDirection)
+        @Html.Hidden("col", wgrid.SortColumn)
+
+
+    }
+
+  
+</div>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $(function () {
+        try {
+            var dir = $("#dir").val();
+            var col = $("#col").val();
+            var header = $("th a[href*=" + col + "]")
+            if (dir=="Ascending") {
+                header.text(header.text()+" ↑");
+            }
+            if (dir=="Descending") {
+                header.text(header.text() + " ↓");
+            }
+        } catch (e) {
+
+        }
+
+    });
+</script>
+
+<a href="/Urunler/Ekle/" class="btn btn-success">New Product</a>
+
